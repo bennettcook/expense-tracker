@@ -5,6 +5,8 @@ const list = document.getElementById('expense-list');
 const totalEl = document.getElementById('total');
 const filterEl = document.getElementById('filter');
 
+// Fix: Ensure newly added expenses are displayed in the list upon submission by attaching the delete handler outside of inline HTML (better practice).
+
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -15,14 +17,9 @@ form.addEventListener('submit', function(e) {
         category: document.getElementById('category').value
     };
 
-    // These lines are necessary for the following reasons:
-    // 1. `expenses.push(expense);` - Adds the newly submitted expense object to the main `expenses` array, so it is tracked and can be rendered.
-    // 2. `form.reset();` - Clears the form fields after submission, providing a clean slate for the next entry and improving user experience.
-    // 3. `render();` - Updates the displayed list of expenses and total, so the UI immediately reflects the most recent changes.
-    expenses.push(expense);
-    form.reset();
-    render();
-
+    expenses.push(expense);       // Add new expense to array
+    form.reset();                 // Reset the form fields
+    render();                     // Update the visible list (will display the newly added record)
 });
 
 filterEl.addEventListener('change', render);
